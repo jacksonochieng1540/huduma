@@ -1,0 +1,44 @@
+/* Core Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: 700;
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* Badges */
+.badge-pending {
+  background-color: #ffc107;
+}
+
+.badge-processing {
+  background-color: #0dcaf0;
+}
+
+.badge-completed {
+  background-color: #198754;
+}
+
+/* Tables */
+.table-hover tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Progress Bars */
+.progress-bar {
+  transition: width 0.6s ease;
+}

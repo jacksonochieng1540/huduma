@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Analytics Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">📊 Analytics Dashboard</h2>
+
+  <form method="get" class="mb-4 row">
+    <div class="col-md-3">
+      <label for="start_date">Start Date</label>
+      <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+    </div>
+    <div class="col-md-3">
+      <label for="end_date">End Date</label>
+      <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+    </div>
+    <div class="col-md-3 align-self-end">
+      <button type="submit" class="btn btn-primary mt-2">Filter</button>
+    </div>
+  </form>
+
+  <div class="mb-3">
+    <a href="{% url 'export_csv' %}" class="btn btn-outline-success btn-sm">⬇️ Export CSV</a>
+    <a href="{% url 'export_pdf' %}" class="btn btn-outline-danger btn-sm">⬇️ Export PDF</a>
+  </div>
+
+  <p><strong>Total Tickets in Range:</strong> {{ recent_tickets_count }}</p>
+
+  <canvas id="statusChart" height="100" class="mb-5"></canvas>
+  <canvas id="serviceChart" height="100"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const statusCtx = document.getElementById('statusChart').getContext('2d');
+  const serviceCtx = document.getElementById('serviceChart').getContext('2d');
+
+  new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+      labels: {{ status_labels|safe }},
+      datasets: [{
+        label: 'Ticket Status',
+        data: {{ status_counts|safe }},
+        backgroundColor: ['#e74c3c', '#f1c40f', '#2ecc71'],
+      }]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom' } },
+      responsive: true,
+    }
+  });
+
+  new Chart(serviceCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ service_labels|safe }},
+      datasets: [{
+        label: 'Tickets per Service',
+        data: {{ service_counts|safe }},
+        backgroundColor: '#3498db',
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+</script>
+{% endblock %}

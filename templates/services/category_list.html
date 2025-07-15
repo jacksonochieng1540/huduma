@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Categories{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Service Categories</h1>
+
+<div class="row">
+  {% for category in object_list %}
+  <div class="col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <i class="{{ category.icon }} fa-3x mb-3 text-primary"></i>
+        <h3 class="card-title">{{ category.name }}</h3>
+        <p class="card-text">{{ category.description|truncatewords:20 }}</p>
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'category-detail' category.pk %}" class="btn btn-outline-primary">
+            View Services <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+          <a href="{% url 'service-list'%}" class="btn btn-outline-secondary">
+            All Services <i class="fas fa-list ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

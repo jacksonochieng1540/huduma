@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard - Huduma Center{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Staff Dashboard</h1>
+  <div class="alert alert-info p-2 mb-0">
+    <i class="fas fa-clock me-2"></i>
+    <span id="current-time">{{ current_time|date:"H:i" }}</span>
+  </div>
+</div>
+
+<!-- ✅ Analytics Summary -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">📊 Service Analytics Summary</h6>
+    <form method="get" class="d-flex align-items-center">
+      <input type="date" name="start_date" value="{{ start_date }}" class="form-control form-control-sm me-2">
+      <input type="date" name="end_date" value="{{ end_date }}" class="form-control form-control-sm me-2">
+      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+    </form>
+  </div>
+  <div class="card-body">
+    <p><strong>Total Tickets:</strong> {{ recent_tickets_count }}</p>
+
+    <div class="mb-3">
+      <a href="{% url 'export_csv' %}" class="btn btn-outline-success btn-sm me-1">⬇️ CSV</a>
+      <a href="{% url 'export_pdf' %}" class="btn btn-outline-danger btn-sm me-1">⬇️ PDF</a>
+      <a href="{% url 'export_excel' %}" class="btn btn-outline-primary btn-sm">⬇️ Excel</a>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <canvas id="statusChart" height="150"></canvas>
+      </div>
+      <div class="col-lg-6">
+        <canvas id="serviceChart" height="150"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Pending Tickets Table -->
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Pending Requests</h6>
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown">
+            <i class="fas fa-filter"></i> Filter
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?priority=H">High Priority</a></li>
+            <li><a class="dropdown-item" href="?priority=N">Normal</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="?">Show All</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover" id="pendingTicketsTable">
+            <thead>
+              <tr>
+                <th>Ticket #</th>
+                <th>Service</th>
+                <th>Customer</th>
+                <th>Priority</th>
+                <th>Wait Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ticket in pending_tickets %}
+              <tr data-ticket-id="{{ ticket.id }}">
+                <td>{{ ticket.ticket_number }}</td>
+                <td>{{ ticket.service.name }}</td>
+                <td>{{ ticket.user.get_full_name|default:ticket.user.username }}</td>
+                <td>
+                  <span class="badge {% if ticket.priority == 'H' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {{ ticket.get_priority_display }}
+                  </span>
+                </td>
+                <td>{{ ticket.wait_time }} mins</td>
+                <td>
+                  <form method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+                    <button name="action" value="process" class="btn btn-sm btn-primary">
+                      <i class="fas fa-play"></i> Start
+                    </button>
+                    <button name="action" value="complete" class="btn btn-sm btn-success">
+                      <i class="fas fa-check"></i> Complete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No pending tickets</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Currently Processing Tickets -->
+  <div class="col-lg-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-info">Currently Processing</h6>
+      </div>
+      <div class="card-body">
+        {% for ticket in processing_tickets %}
+        <div class="card mb-3 border-left-info">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title mb-1">{{ ticket.ticket_number }}</h5>
+              <span class="badge bg-info text-white">
+                {{ ticket.get_status_display }}
+              </span>
+            </div>
+            <p class="card-text mb-1"><strong>{{ ticket.service.name }}</strong></p>
+            <p class="card-text text-muted small mb-2">
+              <i class="fas fa-user me-1"></i>
+              {{ ticket.user.get_full_name|default:ticket.user.username }}
+            </p>
+            <div class="progress mb-2">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{ ticket.progress }}%"></div>
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+              <button name="action" value="complete" class="btn btn-sm btn-success w-100">
+                <i class="fas fa-check"></i> Mark Complete
+              </button>
+            </form>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-4">
+          <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
+          <p class="text-muted">No tickets being processed</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Chart.js CDN & Init -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const statusCtx = document.getElementById('statusChart').getContext('2d');
+  const serviceCtx = document.getElementById('serviceChart').getContext('2d');
+
+  new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+      labels: {{ status_labels|safe }},
+      datasets: [{
+        label: 'Ticket Status',
+        data: {{ status_counts|safe }},
+        backgroundColor: ['#e74c3c', '#f1c40f', '#2ecc71'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+
+  new Chart(serviceCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ service_labels|safe }},
+      datasets: [{
+        label: 'Tickets per Service',
+        data: {{ service_counts|safe }},
+        backgroundColor: '#3498db',
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+</script>
+{% endblock %}
