@@ -140,3 +140,8 @@ Citizens (role='C')
 Staff members (role='S')
 
 Superusers/Admins
+
+📄 License
+This project is licensed under the MIT License.
+Feel free to fork and customize for your organization or government use.
+
