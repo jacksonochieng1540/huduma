@@ -38,6 +38,16 @@ A modern, full-featured Django-based service request and queue management system
 - Service usage breakdown
 - Staff performance metrics
 
+  
+###📸 Screenshots
+🧾 Ticket Detail View
+<img width="1281" height="681" alt="image" src="https://github.com/user-attachments/assets/e88a9b9e-59dc-40a7-ae86-4d33423465fd" />
+
+
+🧑‍💼 Staff Dashboard
+<img width="1275" height="677" alt="image" src="https://github.com/user-attachments/assets/da159d6b-1633-464c-829b-1a812fdf5923" />
+
+<img width="1271" height="616" alt="image" src="https://github.com/user-attachments/assets/df3482e4-01ee-474d-91d3-8cc6b8e510e9" />
 ---
 
 ## 🧱 Tech Stack
@@ -118,17 +128,6 @@ Want to contribute? Great!
 2.Django Project Community
 
 3.FontAwesome & Bootstrap Teams
-
-📸 Screenshots
-🧾 Ticket Detail View
-<img width="1281" height="681" alt="image" src="https://github.com/user-attachments/assets/e88a9b9e-59dc-40a7-ae86-4d33423465fd" />
-
-
-🧑‍💼 Staff Dashboard
-<img width="1275" height="677" alt="image" src="https://github.com/user-attachments/assets/da159d6b-1633-464c-829b-1a812fdf5923" />
-
-<img width="1271" height="616" alt="image" src="https://github.com/user-attachments/assets/df3482e4-01ee-474d-91d3-8cc6b8e510e9" />
-
 
 🔐 User Roles Setup
 Use Django admin or fixtures to create:
