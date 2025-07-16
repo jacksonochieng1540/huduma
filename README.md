@@ -40,6 +40,7 @@ A modern, full-featured Django-based service request and queue management system
 
   
 ###📸 Screenshots
+
 🧾 Ticket Detail View
 <img width="1281" height="681" alt="image" src="https://github.com/user-attachments/assets/e88a9b9e-59dc-40a7-ae86-4d33423465fd" />
 
