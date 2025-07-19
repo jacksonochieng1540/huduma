@@ -12,10 +12,11 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy project
+# Copy all project files
 COPY . /app/
 
-# Collect static (optional)
-RUN python manage.py collectstatic --noinput
+# Set permissions
+RUN chmod +x /app/entrypoint.sh
 
-CMD ["gunicorn", "huduma.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Run using Gunicorn + entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
