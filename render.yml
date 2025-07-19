@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: huduma-center
+    env: docker
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: ""    
+    startCommand: ""     
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        value: 'django-insecure-%ac6z7&mk0i_)w@xh-bm^-m#r)(#1ga)+=9ww3lqgyf9c+h7fs'
+      - key: ALLOWED_HOSTS
+        value: huduma-center.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: huduma-db
+          property: connectionString
