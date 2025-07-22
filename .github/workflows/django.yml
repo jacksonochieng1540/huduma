@@ -43,7 +43,7 @@ jobs:
       env:
         DB_NAME: hudumadb
         DB_USER: postgres
-        DB_PASSWORD: 9320vanity
+        DB_PASSWORD: ki
         DB_HOST: localhost
         DB_PORT: 5432
       run: |
