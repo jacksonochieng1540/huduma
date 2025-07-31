@@ -139,4 +139,4 @@ Citizens (role='C')
 
 Staff members (role='S')
 
-Superusers/Admins
+Superusers/Admins-with ability to add services and their categories.
