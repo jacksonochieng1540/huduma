@@ -1,49 +1,49 @@
-# 🏢 Huduma Center Ticketing System
+#  Huduma Center Ticketing System
 
 A modern, full-featured Django-based service request and queue management system for Huduma Centers in Kenya. Staff can manage citizen service requests, monitor queues, and process tickets in real-time, while citizens can submit requests, track their status, and upload required documents.
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 👥 User Roles
+###  User Roles
 - **Citizens**: Submit service requests, upload documents, and track ticket progress.
 - **Staff**: View and manage tickets, mark tickets as processing/completed, view analytics.
 - **Admin**: Full control over the system.
 
-### 🎫 Ticket Management
+###  Ticket Management
 - Create tickets based on service.
 - Auto-generated unique ticket numbers (e.g. `T00001`).
 - Track statuses: `Pending`, `Processing`, `Completed`.
 - Progress bar and timestamps (created, processing start, completion).
 
-### 📊 Staff Dashboard
+###  Staff Dashboard
 - View all pending and processing tickets.
 - Filter by priority (`High`, `Normal`).
 - Start and complete tickets.
 - View real-time clock.
 
-### 📁 Document Upload
+###  Document Upload
 - Citizens or staff can upload service-specific documents.
 - List uploaded files with status badges (`Uploaded`, `Pending`, `Missing`).
 - Auto-display file names.
 
-### 📄 Ticket Detail View
+###  Ticket Detail View
 - View service description, customer details, ticket status.
 - Auto-refresh for real-time updates.
 - Print-friendly layout and PDF generation.
 
-### 📈 Analytics 
+###  Analytics 
 - Ticket volume by status
 - Service usage breakdown
 - Staff performance metrics
 
-  ###📸 Screenshots
-🧾 Ticket Detail View
+  ### Screenshots
+ Ticket Detail View
 <img width="1281" height="681" alt="image" src="https://github.com/user-attachments/assets/e88a9b9e-59dc-40a7-ae86-4d33423465fd" />
 
 
-🧑‍💼 Staff Dashboard
+ Staff Dashboard
 <img width="1275" height="677" alt="image" src="https://github.com/user-attachments/assets/da159d6b-1633-464c-829b-1a812fdf5923" />
 
 <img width="1271" height="616" alt="image" src="https://github.com/user-attachments/assets/df3482e4-01ee-474d-91d3-8cc6b8e510e9" />
@@ -52,7 +52,7 @@ A modern, full-featured Django-based service request and queue management system
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 | Layer        | Technology               |
 |--------------|--------------------------|
@@ -67,7 +67,7 @@ A modern, full-featured Django-based service request and queue management system
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```bash
 huduma/
@@ -81,7 +81,7 @@ huduma/
 ├── manage.py
 └── Dockerfile, docker-compose.yml
 
-⚙️ Installation
+ Installation
 ##1. Clone the Repository
 bash
 Copy
@@ -111,7 +111,7 @@ Copy
 Edit
 python manage.py runserver
 
-🤝 Contribution
+ Contribution
 Want to contribute? Great!
 
 1.Fork the project
@@ -124,7 +124,7 @@ Want to contribute? Great!
 
 5.Open a Pull Request
 
-🙌 Acknowledgements
+ Acknowledgements
 1.Kenya eCitizen for Huduma Center inspiration
 
 2.Django Project Community
@@ -132,7 +132,7 @@ Want to contribute? Great!
 3.FontAwesome & Bootstrap Teams
 
 
-🔐 User Roles Setup
+ User Roles Setup
 Use Django admin or fixtures to create:
 
 Citizens (role='C')
