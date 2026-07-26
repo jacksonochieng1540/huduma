@@ -14,7 +14,6 @@ from io import BytesIO
 
 
 def dashboard(request):
-    # Get filters
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
 
@@ -103,22 +102,21 @@ def export_excel(request):
     return response
 
 
-# Weekly email summary (call via cron/scheduler)
 def send_weekly_report():
     last_week = timezone.now().date() - timezone.timedelta(days=7)
     tickets = Ticket.objects.filter(created_at__date__gte=last_week)
     count = tickets.count()
     top_services = tickets.values('service__name').annotate(c=Count('id')).order_by('-c')[:5]
 
-    body = f"🗓 Weekly Analytics Report\n\nTotal Tickets: {count}\nTop Services:\n"
+    body = f" Weekly Analytics Report\n\nTotal Tickets: {count}\nTop Services:\n"
     for s in top_services:
         body += f"- {s['service__name']}: {s['c']}\n"
 
-    # Get staff emails (you may customize this)
+)
     staff_emails = User.objects.filter(is_staff=True).values_list('email', flat=True)
 
     send_mail(
-        subject="📊 Huduma Weekly Report",
+        subject=" Huduma Weekly Report",
         message=body,
         from_email="huduma@example.com",
         recipient_list=staff_emails,
